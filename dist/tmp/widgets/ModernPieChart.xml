@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="tms.modernpiechart.ModernPieChart" pluginWidget="true" needsEntityContext="true"
+    offlineCapable="true"
+    supportedPlatform="Web"
+    xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Modern Pie Chart</name>
+    <description>Modern Pie Chart with generate reports and opitons</description>
+    <icon />
+    <properties>
+        <!-- DATA -->
+
+        <property key="dataSource" type="datasource" isList="true" required="true">
+            <caption>Data Source</caption>
+            <category>Data</category>
+            <description>Select list data source</description>
+        </property>
+
+
+        <property key="labelAttr" type="attribute" dataSource="dataSource" required="true">
+            <caption>Label</caption>
+            <category>Data</category>
+            <description>Slice label attribute</description>
+            <attributeTypes>
+                <attributeType name="String" />
+            </attributeTypes>
+        </property>
+
+        <property key="jsonAttr" type="attribute" dataSource="dataSource" required="true">
+            <caption>Json</caption>
+            <category>Data</category>
+            <description>Json attribute for detailed data</description>
+            <attributeTypes>
+                <attributeType name="String" />
+            </attributeTypes>
+        </property>
+
+        <property key="valueAttr" type="attribute" dataSource="dataSource" required="true">
+            <caption>Value</caption>
+            <category>Data</category>
+            <description>Slice value attribute</description>
+            <attributeTypes>
+                <attributeType name="Integer" />
+                <attributeType name="Long" />
+                <attributeType name="Decimal" />
+            </attributeTypes>
+        </property>
+
+        <property key="sliceColorAttr" type="attribute" dataSource="dataSource" required="false">
+            <caption>Slice Color (optional)</caption>
+            <category>Data</category>
+            <description>Optional per-slice hex color attribute. Leave empty to use the chart theme palette.</description>
+            <attributeTypes>
+                <attributeType name="String" />
+            </attributeTypes>
+        </property>
+
+        <!-- APPEARANCE -->
+
+        <property key="chartTitle" type="string">
+            <caption>Chart Title</caption>
+            <category>Appearance</category>
+            <description>Chart title displayed above the chart</description>
+        </property>
+
+        <property key="containerClass" type="string">
+            <caption>Container Class</caption>
+            <category>Appearance</category>
+            <description>Custom CSS class for chart container</description>
+        </property>
+
+        <property key="chartHeightPx" type="string" defaultValue="400">
+            <caption>Chart Height (px)</caption>
+            <category>Appearance</category>
+            <description>Height of chart in pixels</description>
+        </property>
+
+        <property key="chartTheme" type="enumeration" defaultValue="indigo">
+            <caption>Chart Theme</caption>
+            <category>Appearance</category>
+            <description>Select a predefined color theme for the chart. Choose 'Custom' to use the
+                Start Color and End Color properties.</description>
+            <enumerationValues>
+                <enumerationValue key="indigo">Indigo</enumerationValue>
+                <enumerationValue key="azure">Azure</enumerationValue>
+                <enumerationValue key="emerald">Emerald</enumerationValue>
+                <enumerationValue key="violet">Violet</enumerationValue>
+                <enumerationValue key="amber">Amber</enumerationValue>
+                <enumerationValue key="rose">Rose</enumerationValue>
+                <enumerationValue key="slate">Slate</enumerationValue>
+                <enumerationValue key="dark">Dark</enumerationValue>
+                <enumerationValue key="custom">Custom</enumerationValue>
+            </enumerationValues>
+        </property>
+
+        <!-- COLORS -->
+
+        <property key="startColor" type="string">
+            <caption>Start Color</caption>
+            <category>Colors</category>
+            <description>Base color used to generate the slice palette in themed mode, or the first slice color in Custom mode</description>
+        </property>
+
+        <property key="endColor" type="string">
+            <caption>End Color</caption>
+            <category>Colors</category>
+            <description>End color used to generate the slice palette gradient in Custom mode</description>
+        </property>
+
+        <!-- OPTIONS -->
+
+        <property key="donutMode" type="boolean" defaultValue="false">
+            <caption>Donut Mode</caption>
+            <category>Options</category>
+            <description>Render as a donut instead of a full pie</description>
+        </property>
+
+        <property key="cutoutPercentage" type="string" defaultValue="60">
+            <caption>Donut Cutout %</caption>
+            <category>Options</category>
+            <description>Only applies when Donut Mode is enabled (recommended 50-70)</description>
+        </property>
+
+        <property key="showLabels" type="boolean" defaultValue="true">
+            <caption>Show Slice Labels</caption>
+            <category>Options</category>
+            <description>Display label and percentage on or near each slice</description>
+        </property>
+
+        <property key="legendPosition" type="enumeration" defaultValue="right">
+            <caption>Legend Position</caption>
+            <category>Options</category>
+            <description>Position of the chart legend</description>
+            <enumerationValues>
+                <enumerationValue key="top">Top</enumerationValue>
+                <enumerationValue key="bottom">Bottom</enumerationValue>
+                <enumerationValue key="left">Left</enumerationValue>
+                <enumerationValue key="right">Right</enumerationValue>
+                <enumerationValue key="none">None</enumerationValue>
+            </enumerationValues>
+        </property>
+
+        <property key="labelMaxLength" type="string">
+            <caption>Label Max Length</caption>
+            <category>Options</category>
+            <description>Maximum legend label length before truncation (recommended 15)</description>
+        </property>
+
+        <!-- REPORTING -->
+
+        <property key="enableReport" type="boolean" defaultValue="true">
+            <caption>Enable Report</caption>
+            <category>Report Config</category>
+            <description>Enable report generation.</description>
+        </property>
+
+        <property key="reportTitle" type="string">
+            <caption>Report Title</caption>
+            <category>Report Config</category>
+            <description>Title displayed in the generated report.</description>
+        </property>
+
+        <property key="companyName" type="string">
+            <caption>Company Name</caption>
+            <category>Report Config</category>
+            <description>Company name shown in the report.</description>
+        </property>
+
+        <property key="generatedBy" type="string">
+            <caption>Generated By</caption>
+            <category>Report Config</category>
+            <description>Name of the report generator.</description>
+        </property>
+
+        <property key="footerText" type="string">
+            <caption>Footer Text</caption>
+            <category>Report Config</category>
+            <description>Footer displayed in the report.</description>
+        </property>
+
+        <property key="exportButtonText" type="string">
+            <caption>Export Button Text</caption>
+            <category>Report Config</category>
+            <description>Caption shown on the export button.</description>
+        </property>
+
+        <property key="includeChart" type="boolean" defaultValue="true">
+            <caption>Include Chart</caption>
+            <category>Report Config</category>
+            <description>Include the chart image in the report.</description>
+        </property>
+
+        <property key="includeStatistics" type="boolean" defaultValue="true">
+            <caption>Include Statistics</caption>
+            <category>Report Config</category>
+            <description>Include calculated statistics in the report.</description>
+        </property>
+
+        <property key="includeTable" type="boolean" defaultValue="true">
+            <caption>Include Data Table</caption>
+            <category>Report Config</category>
+            <description>Include the data table in the report.</description>
+        </property>
+
+        <property key="generateReportAction" type="action">
+            <caption>Generate Report Action</caption>
+            <category>Report Config</category>
+            <description>Microflow executed after report generation.</description>
+        </property>
+
+        <!-- BRANDING -->
+
+        <property key="companyLogo" type="string">
+            <caption>Company Logo Path</caption>
+            <category>Branding</category>
+            <description>Relative path to the company logo.</description>
+        </property>
+
+        <property key="reportTheme" type="enumeration" defaultValue="corporate">
+            <caption>Report Theme</caption>
+            <category>Branding</category>
+            <description>Visual theme applied to the generated report</description>
+            <enumerationValues>
+                <enumerationValue key="corporate">Corporate Blue</enumerationValue>
+                <enumerationValue key="emerald">Emerald</enumerationValue>
+                <enumerationValue key="purple">Purple</enumerationValue>
+                <enumerationValue key="dark">Dark</enumerationValue>
+                <enumerationValue key="custom">Custom</enumerationValue>
+            </enumerationValues>
+        </property>
+
+        <property key="primaryColor" type="string">
+            <caption>Primary Color</caption>
+            <category>Branding</category>
+            <description>Primary color used in the report theme</description>
+        </property>
+
+        <property key="secondaryColor" type="string">
+            <caption>Secondary Color</caption>
+            <category>Branding</category>
+            <description>Secondary color used in the report theme</description>
+        </property>
+
+    </properties>
+</widget>
