@@ -1,0 +1,720 @@
+/* ModernPieChart widget styles */
+
+.mpc-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, .08);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    transition: all .25s ease;
+}
+
+.mpc-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .14);
+}
+
+.mpc-title {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    text-align: center;
+}
+
+.mpc-loading,
+.mpc-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+/* Chart canvas wrapper */
+
+.mpc-chart-canvas-wrap {
+    position: relative;
+    width: 100%;
+    /* height is intentionally not set here — it's controlled by the inline
+       flex: 1 1 0% style, which makes this element fill whatever vertical
+       space is left in the (now fixed-height) .mpc-container after the
+       header and legend. */
+    background: transparent;
+    filter: drop-shadow(0 6px 14px rgba(15, 23, 42, 0.12));
+    overflow: visible;
+}
+
+.mpc-container.mpc-dark .mpc-chart-canvas-wrap {
+    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.5));
+}
+
+/* Inline labels fallback (when legend is hidden but showLabels is true) */
+
+.mpc-inline-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    justify-content: center;
+    margin-top: 12px;
+    padding: 0 8px;
+}
+
+.mpc-inline-label {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    padding-left: 16px;
+}
+
+.mpc-inline-label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* Export button — pill shape, gradient, icon chip, shimmer sweep on hover */
+
+.mpc-export-btn {
+    position: relative;
+    padding: 6px 16px 6px 6px;
+    border: none;
+    border-radius: 999px;
+    /* background is intentionally not set here — it's applied inline from
+       buttonTheme.background (derived from chartTheme/startColor/endColor
+       and dark mode), so the button always tracks the chart's theme. */
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    /* box-shadow color is intentionally not set here — see boxShadow inline
+       style, which tracks the same theme color as the background. */
+}
+
+.mpc-export-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.5s ease;
+}
+
+.mpc-export-btn:hover:not(:disabled)::after {
+    left: 130%;
+}
+
+.mpc-export-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.mpc-export-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.mpc-export-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.mpc-btn-icon-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    flex-shrink: 0;
+}
+
+.mpc-btn-spinner {
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: mpc-spin 0.7s linear infinite;
+}
+
+@keyframes mpc-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Dark theme support */
+
+.mpc-container.mpc-dark {
+    background: #18181b;
+}
+
+.mpc-container.mpc-dark .mpc-title {
+    color: #f4f4f5;
+}
+
+.mpc-container.mpc-dark .mpc-loading,
+.mpc-container.mpc-dark .mpc-empty {
+    color: #6b7280;
+}
+
+.mpc-container.mpc-dark .mpc-inline-label {
+    color: #e5e7eb;
+}
+
+/* Modern HTML tooltip: left accent bar, uppercase label, bold value, % highlight */
+
+.mpc-tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -100%) scale(0.92);
+    transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: stretch;
+    border-radius: 10px;
+    background: rgba(20, 20, 24, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.5),
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    white-space: nowrap;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.mpc-tooltip-swatch {
+    width: 4px;
+    flex-shrink: 0;
+}
+
+.mpc-tooltip-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 10px 14px;
+}
+
+.mpc-tooltip-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+.mpc-tooltip-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.mpc-tooltip-pct {
+    color: #6ee7b7;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+/* Leader line + dot connecting the tooltip to the hovered slice */
+
+.mpc-tooltip-line-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 20;
+}
+
+.mpc-tooltip-line {
+    stroke-width: 2;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+}
+
+.mpc-tooltip-dot {
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    stroke: #ffffff;
+    stroke-width: 2;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.7));
+}
+
+.mpc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+}
+
+.mpc-header .mpc-title {
+    margin: 0;
+    text-align: left;
+}
+
+/* Permanent per-slice leader-line labels (elbow line + external text,
+   value shown directly on larger arcs) */
+
+.mpc-external-labels-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 8;
+}
+
+.mpc-external-label-line {
+    fill: none;
+    stroke-width: 1.75;
+    opacity: 1;
+    filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, 0.9));
+}
+
+.mpc-container.mpc-dark .mpc-external-label-line {
+    filter: drop-shadow(0 0 1.5px rgba(0, 0, 0, 0.6));
+}
+
+.mpc-external-label-dot {
+    opacity: 1;
+}
+
+.mpc-external-label-text {
+    font-size: 12px;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.mpc-external-label-text-light {
+    fill: #374151;
+}
+
+.mpc-external-label-text-dark {
+    fill: #e5e7eb;
+}
+
+.mpc-external-arc-value {
+    font-size: 13px;
+    font-weight: 700;
+    fill: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    paint-order: stroke;
+    stroke: rgba(255, 255, 255, 0.55);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+}
+
+.mpc-external-label-value {
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+/* Overlay */
+.mpc-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Modal */
+.mpc-modal {
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+}
+
+/* Header */
+.mpc-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.mpc-close-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+/* Info */
+.mpc-modal-info {
+    padding: 12px 20px;
+    font-weight: 600;
+}
+
+/* Table */
+.mpc-modal-table-container {
+    flex: 1;
+    overflow: auto;
+    min-height: 0;
+    width: 100%;
+    background: #ffffff;
+}
+
+.mpc-modal-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.mpc-modal-table th {
+    position: sticky;
+    top: 0;
+    background: #f5f5f5;
+    z-index: 1;
+}
+
+.mpc-modal-table th,
+.mpc-modal-table td {
+    padding: 12px 14px;
+    border: 1px solid #e5e5e5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.mpc-modal-table thead th {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    z-index: 5;
+    border-bottom: 2px solid #d9d9d9;
+}
+
+.mx-theme-dark .mpc-modal-table thead th,
+[data-mx-color-scheme="dark"] .mpc-modal-table thead th {
+    background: #252526;
+    color: #fff;
+}
+
+.mpc-modal-table th:first-child,
+.mpc-modal-table td:first-child {
+    position: sticky;
+    left: 0;
+    background: inherit;
+    z-index: 3;
+}
+
+.mpc-modal-table thead th:first-child {
+    z-index: 6;
+}
+
+.mpc-search-input {
+    width: 320px;
+    max-width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+}
+
+.mpc-search-container {
+    padding: 12px 24px 16px;
+}
+
+.mpc-modal-table tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.mpc-modal-table tbody tr:hover {
+    background: #eaf3ff;
+}
+
+.mpc-col-materialno {
+    width: 180px;
+}
+
+.mpc-col-message {
+    width: 520px;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.mpc-col-status {
+    width: 90px;
+    text-align: center;
+}
+
+.mpc-col-createddate,
+.mpc-col-changeddate {
+    width: 180px;
+}
+
+.mpc-col-materialid,
+.mpc-col-sapmaterialid {
+    width: 180px;
+}
+
+.mpc-modal-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 24px;
+}
+
+.mpc-modal-export-btn {
+    background: #107c41;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.mpc-modal-export-btn:hover {
+    background: #0e6b38;
+}
+
+/* Dark mode — the modal is rendered via a portal straight to <body>, so it
+   sits outside .mpc-container in the DOM and can't be reached by
+   ".mpc-container.mpc-dark ..." ancestor selectors. isDark is passed down
+   as a prop instead and toggles .mpc-modal-dark directly on the overlay. */
+
+.mpc-modal-overlay.mpc-modal-dark {
+    background: rgba(0, 0, 0, .6);
+}
+
+.mpc-modal-dark .mpc-modal {
+    background: #18181b;
+    color: #f4f4f5;
+}
+
+.mpc-modal-dark .mpc-modal-header {
+    border-bottom: 1px solid #3f3f46;
+}
+
+.mpc-modal-dark .mpc-modal-header h3 {
+    color: #f4f4f5;
+}
+
+.mpc-modal-dark .mpc-close-button {
+    color: #d4d4d8;
+}
+
+.mpc-modal-dark .mpc-close-button:hover {
+    color: #f4f4f5;
+}
+
+.mpc-modal-dark .mpc-modal-info {
+    color: #d4d4d8;
+}
+
+.mpc-modal-dark .mpc-modal-table-container {
+    background: #18181b;
+}
+
+.mpc-modal-dark .mpc-modal-table th,
+.mpc-modal-dark .mpc-modal-table td {
+    border-color: #3f3f46;
+}
+
+.mpc-modal-dark .mpc-modal-table thead th {
+    background: #27272a;
+    color: #f4f4f5;
+    border-bottom: 2px solid #52525b;
+}
+
+.mpc-modal-dark .mpc-modal-table tbody tr {
+    color: #e4e4e7;
+}
+
+.mpc-modal-dark .mpc-modal-table tbody tr:nth-child(even) {
+    background: #202023;
+}
+
+.mpc-modal-dark .mpc-modal-table tbody tr:hover {
+    background: #2c2c31;
+}
+
+.mpc-modal-dark .mpc-search-input {
+    background: #27272a;
+    border: 1px solid #3f3f46;
+    color: #f4f4f5;
+}
+
+.mpc-modal-dark .mpc-search-input::placeholder {
+    color: #a1a1aa;
+}
+
+.mpc-chart-outer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1 1 0%;
+    min-height: 0;
+    overflow: visible;
+    /* Guarantees real space between the donut's leader-line labels and the
+       legend rendered right after it in the flex column — without this the
+       two sit flush against each other and any label near the bottom edge
+       visually runs into the legend row. */
+    gap: 10px;
+}
+
+.mpc-chart-outer-row {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 0;
+}
+
+/* Below ~480px wide, stack a left/right legend under the chart instead of
+   squeezing the donut sideways — a vertical legend column eats too much
+   width on narrow/mobile containers. */
+.mpc-chart-outer-row.mpc-compact {
+    flex-direction: column;
+}
+
+.mpc-chart-canvas-wrap {
+    /* Keeps the donut usable instead of collapsing to near-nothing when a
+       host page gives the widget a very short heightPx. */
+    min-height: 140px;
+}
+
+.mpc-compact .mpc-legend {
+    gap: 6px 10px;
+    padding: 8px 4px;
+}
+
+.mpc-compact .mpc-legend-horizontal {
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+}
+
+.mpc-compact .mpc-legend-label {
+    font-size: 11px;
+}
+
+.mpc-compact .mpc-legend-dot {
+    width: 8px;
+    height: 8px;
+}
+
+.mpc-compact .mpc-header {
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.mpc-compact .mpc-title {
+    font-size: 15px;
+}
+
+.mpc-legend {
+    display: grid;
+    gap: 8px 16px;
+    padding: 12px 4px;
+    flex-shrink: 0;
+}
+
+.mpc-legend-horizontal {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.mpc-legend-vertical {
+    max-height: 100%;
+    overflow-y: auto;
+    align-self: stretch;
+    /* thin, unobtrusive scrollbar instead of the default chunky one */
+    scrollbar-width: thin;
+}
+
+.mpc-legend-vertical::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mpc-legend-vertical::-webkit-scrollbar-thumb {
+    background: rgba(124, 58, 237, 0.25);
+    border-radius: 999px;
+}
+
+.mpc-legend-vertical::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.mpc-legend-item {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    padding: 4px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.12s ease;
+}
+
+.mpc-legend-item:hover {
+    background: rgba(124, 58, 237, 0.08);
+}
+
+.mpc-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.mpc-legend-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mpc-legend-dark .mpc-legend-label {
+    color: #e5e7eb;
+}
+
+.mpc-legend-dark .mpc-legend-item:hover {
+    background: rgba(139, 92, 246, 0.15);
+}
