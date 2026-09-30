@@ -108,3 +108,20 @@ export function toRgba(hex: string, alpha: number): string {
     const { r, g, b } = hexToRgbSafe(hex);
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
+
+/**
+ * Single accent color for UI chrome (e.g. the drill-down modal's Export
+ * button) that follows the chart theme: the theme's strongest base color,
+ * or the Start Color in Custom mode.
+ */
+export function getThemeAccent(theme: ChartTheme, startColor?: string): string {
+    if (theme === "custom") {
+        return startColor && hexToRgb(startColor) ? startColor.trim() : THEME_PALETTES.indigo[0];
+    }
+    if (theme === "dark") {
+        // The "dark" palette's first colors are near-black and would vanish
+        // against a dark modal, so use its lightest readable stop.
+        return THEME_PALETTES.dark[3];
+    }
+    return (THEME_PALETTES[theme] ?? THEME_PALETTES.indigo)[0];
+}

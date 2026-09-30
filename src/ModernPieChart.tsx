@@ -1,9 +1,10 @@
 import { createElement, ReactElement, useRef, useMemo, useEffect, useState } from "react";
 import { ModernPieChartContainerProps } from "../typings/ModernPieChartProps";
 import { PieChartView } from "./components/PieChartView";
+import { DrillDownStyleOptions } from "./components/DrillDownModal";
 import { PdfExportButton } from "./components/PdfExportButton";
 import { transformToSlices } from "./utils/dataTransform";
-import { ChartTheme } from "./utils/colorPalette";
+import { ChartTheme, getThemeAccent } from "./utils/colorPalette";
 import { Chart as ChartJS } from "chart.js";
 import { observeThemeChanges } from "./utils/themeDetection";
 
@@ -39,7 +40,28 @@ export function ModernPieChart(props: ModernPieChartContainerProps): ReactElemen
         reportTheme,
         primaryColor,
         secondaryColor,
-        jsonAttr
+        jsonAttr,
+        modalTheme,
+        modalWidth,
+        modalHeight,
+        modalBorderRadius,
+        modalFontSize,
+        modalBackgroundColor,
+        modalTextColor,
+        modalBorderColor,
+        modalHeaderBackground,
+        modalHeaderTextColor,
+        modalTableHeaderBackground,
+        modalTableHeaderTextColor,
+        modalRowStripeColor,
+        modalRowHoverColor,
+        modalAccentColor,
+        modalStripedRows,
+        modalEnableColumnFilters,
+        modalShowSearch,
+        modalShowExport,
+        modalBackdropOpacity,
+        modalClass
     } = props;
 
     const chartRef = useRef<ChartJS<"pie">>(null);
@@ -60,6 +82,41 @@ export function ModernPieChart(props: ModernPieChartContainerProps): ReactElemen
     const heightPx = Number(chartHeightPx) || 400;
     const cutout = Number(cutoutPercentage) || 60;
     const maxLabelLen = labelMaxLength ? Number(labelMaxLength) : undefined;
+
+    const modalStyleOptions = useMemo<DrillDownStyleOptions>(
+        () => ({
+            theme: modalTheme,
+            width: modalWidth,
+            height: modalHeight,
+            borderRadius: modalBorderRadius,
+            fontSize: modalFontSize,
+            backgroundColor: modalBackgroundColor,
+            textColor: modalTextColor,
+            borderColor: modalBorderColor,
+            headerBackground: modalHeaderBackground,
+            headerTextColor: modalHeaderTextColor,
+            tableHeaderBackground: modalTableHeaderBackground,
+            tableHeaderTextColor: modalTableHeaderTextColor,
+            rowStripeColor: modalRowStripeColor,
+            rowHoverColor: modalRowHoverColor,
+            accentColor: modalAccentColor,
+            stripedRows: modalStripedRows,
+            showSearch: modalShowSearch,
+            showExport: modalShowExport,
+            enableColumnFilters: modalEnableColumnFilters,
+            backdropOpacity: modalBackdropOpacity,
+            themeAccent: getThemeAccent(chartTheme as ChartTheme, startColor),
+            className: modalClass
+        }),
+        [
+            modalTheme, modalWidth, modalHeight, modalBorderRadius, modalFontSize,
+            modalBackgroundColor, modalTextColor, modalBorderColor,
+            modalHeaderBackground, modalHeaderTextColor,
+            modalTableHeaderBackground, modalTableHeaderTextColor,
+            modalRowStripeColor, modalRowHoverColor, modalAccentColor,
+            modalStripedRows, modalEnableColumnFilters, modalShowSearch, modalShowExport, modalBackdropOpacity, modalClass, chartTheme, startColor
+        ]
+    );
 
     const isLoading = dataSource.status === "loading";
     const [isDark, setIsDark] = useState(false);
@@ -153,6 +210,7 @@ export function ModernPieChart(props: ModernPieChartContainerProps): ReactElemen
                     heightPx={heightPx}
                     chartRef={chartRef}
                     isDark={isDark}
+                    modalStyleOptions={modalStyleOptions}
                 />
             )}
         </div>

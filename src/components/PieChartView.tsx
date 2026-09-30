@@ -1,7 +1,7 @@
 import { createElement, ReactElement, useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { Pie } from "react-chartjs-2";
 import { ChartLegend } from "./ChartLegend";
-import { DrillDownModal } from "./DrillDownModal";
+import { DrillDownModal, DrillDownStyleOptions } from "./DrillDownModal";
 import {
     Chart as ChartJS,
     ArcElement,
@@ -29,6 +29,7 @@ export interface PieChartViewProps {
     heightPx: number;
     chartRef?: React.RefObject<ChartJS<"pie">>;
     isDark: boolean;
+    modalStyleOptions?: DrillDownStyleOptions;
 }
 
 interface ExternalLabelPos {
@@ -66,7 +67,8 @@ export function PieChartView(props: PieChartViewProps): ReactElement {
         labelMaxLength,
         heightPx,
         chartRef,
-        isDark
+        isDark,
+        modalStyleOptions
     } = props;
 
     const tooltipRef = useRef<HTMLDivElement>(null);
@@ -727,6 +729,7 @@ export function PieChartView(props: PieChartViewProps): ReactElement {
                 records={selectedSlice?.records ?? []}
                 onClose={() => setShowModal(false)}
                 isDark={isDark}
+                styleOptions={modalStyleOptions}
             />
         </div>
     );

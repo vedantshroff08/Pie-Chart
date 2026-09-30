@@ -11,6 +11,8 @@ export type ChartThemeEnum = "indigo" | "azure" | "emerald" | "violet" | "amber"
 
 export type LegendPositionEnum = "top" | "bottom" | "left" | "right" | "none";
 
+export type ModalThemeEnum = "auto" | "light" | "dark";
+
 export type ReportThemeEnum = "corporate" | "emerald" | "purple" | "dark" | "custom";
 
 export interface ModernPieChartContainerProps {
@@ -34,6 +36,27 @@ export interface ModernPieChartContainerProps {
     showLabels: boolean;
     legendPosition: LegendPositionEnum;
     labelMaxLength: string;
+    modalTheme: ModalThemeEnum;
+    modalWidth: string;
+    modalHeight: string;
+    modalBorderRadius: string;
+    modalFontSize: string;
+    modalBackgroundColor: string;
+    modalTextColor: string;
+    modalBorderColor: string;
+    modalHeaderBackground: string;
+    modalHeaderTextColor: string;
+    modalTableHeaderBackground: string;
+    modalTableHeaderTextColor: string;
+    modalRowStripeColor: string;
+    modalRowHoverColor: string;
+    modalAccentColor: string;
+    modalStripedRows: boolean;
+    modalEnableColumnFilters: boolean;
+    modalShowSearch: boolean;
+    modalShowExport: boolean;
+    modalBackdropOpacity: string;
+    modalClass: string;
     enableReport: boolean;
     reportTitle: string;
     companyName: string;
@@ -77,6 +100,27 @@ export interface ModernPieChartPreviewProps {
     showLabels: boolean;
     legendPosition: LegendPositionEnum;
     labelMaxLength: string;
+    modalTheme: ModalThemeEnum;
+    modalWidth: string;
+    modalHeight: string;
+    modalBorderRadius: string;
+    modalFontSize: string;
+    modalBackgroundColor: string;
+    modalTextColor: string;
+    modalBorderColor: string;
+    modalHeaderBackground: string;
+    modalHeaderTextColor: string;
+    modalTableHeaderBackground: string;
+    modalTableHeaderTextColor: string;
+    modalRowStripeColor: string;
+    modalRowHoverColor: string;
+    modalAccentColor: string;
+    modalStripedRows: boolean;
+    modalEnableColumnFilters: boolean;
+    modalShowSearch: boolean;
+    modalShowExport: boolean;
+    modalBackdropOpacity: string;
+    modalClass: string;
     enableReport: boolean;
     reportTitle: string;
     companyName: string;

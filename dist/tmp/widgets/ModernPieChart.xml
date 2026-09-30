@@ -146,6 +146,139 @@
             <description>Maximum legend label length before truncation (recommended 15)</description>
         </property>
 
+        <!-- DRILL-DOWN MODAL -->
+
+        <property key="modalTheme" type="enumeration" defaultValue="auto">
+            <caption>Modal Theme</caption>
+            <category>Drill-Down Modal</category>
+            <description>Auto follows the chart's light/dark mode. Light or Dark forces the modal theme.</description>
+            <enumerationValues>
+                <enumerationValue key="auto">Auto (follow chart)</enumerationValue>
+                <enumerationValue key="light">Light</enumerationValue>
+                <enumerationValue key="dark">Dark</enumerationValue>
+            </enumerationValues>
+        </property>
+
+        <property key="modalWidth" type="string" required="false">
+            <caption>Modal Width</caption>
+            <category>Drill-Down Modal</category>
+            <description>Optional. Any CSS width, e.g. 90%, 1000px, 70vw. Empty = 90% (max 1200px).</description>
+        </property>
+
+        <property key="modalHeight" type="string" required="false">
+            <caption>Modal Height</caption>
+            <category>Drill-Down Modal</category>
+            <description>Optional. Any CSS height, e.g. 85vh, 600px. Empty = 85vh.</description>
+        </property>
+
+        <property key="modalBorderRadius" type="string" required="false">
+            <caption>Border Radius</caption>
+            <category>Drill-Down Modal</category>
+            <description>Optional. Corner radius in px (a plain number) or any CSS length. Empty = 8.</description>
+        </property>
+
+        <property key="modalFontSize" type="string" required="false">
+            <caption>Font Size</caption>
+            <category>Drill-Down Modal</category>
+            <description>Optional. Table font size in px (a plain number) or any CSS length. Empty = 14px.</description>
+        </property>
+
+        <property key="modalBackgroundColor" type="string" required="false">
+            <caption>Background Color</caption>
+            <category>Drill-Down Modal</category>
+            <description>Modal and table body background. Any CSS color. Empty = theme default.</description>
+        </property>
+
+        <property key="modalTextColor" type="string" required="false">
+            <caption>Text Color</caption>
+            <category>Drill-Down Modal</category>
+            <description>Body text color. Empty = theme default.</description>
+        </property>
+
+        <property key="modalBorderColor" type="string" required="false">
+            <caption>Border Color</caption>
+            <category>Drill-Down Modal</category>
+            <description>Color of table and header borders. Empty = theme default.</description>
+        </property>
+
+        <property key="modalHeaderBackground" type="string" required="false">
+            <caption>Header Background</caption>
+            <category>Drill-Down Modal</category>
+            <description>Background of the modal title bar. Empty = transparent.</description>
+        </property>
+
+        <property key="modalHeaderTextColor" type="string" required="false">
+            <caption>Header Text Color</caption>
+            <category>Drill-Down Modal</category>
+            <description>Color of the modal title and close button. Empty = theme default.</description>
+        </property>
+
+        <property key="modalTableHeaderBackground" type="string" required="false">
+            <caption>Table Header Background</caption>
+            <category>Drill-Down Modal</category>
+            <description>Background of the table's column header row (including the filter inputs). Empty = theme default.</description>
+        </property>
+
+        <property key="modalTableHeaderTextColor" type="string" required="false">
+            <caption>Table Header Text Color</caption>
+            <category>Drill-Down Modal</category>
+            <description>Text color of the column headers. Empty = theme default.</description>
+        </property>
+
+        <property key="modalRowStripeColor" type="string" required="false">
+            <caption>Striped Row Color</caption>
+            <category>Drill-Down Modal</category>
+            <description>Background of every second row (when Striped Rows is on). Empty = theme default.</description>
+        </property>
+
+        <property key="modalRowHoverColor" type="string" required="false">
+            <caption>Row Hover Color</caption>
+            <category>Drill-Down Modal</category>
+            <description>Row highlight color on hover. Empty = theme default.</description>
+        </property>
+
+        <property key="modalAccentColor" type="string" required="false">
+            <caption>Accent Color</caption>
+            <category>Drill-Down Modal</category>
+            <description>Optional. Color of the Export button and focused inputs. Empty = follows the Chart Theme (Start Color in Custom mode).</description>
+        </property>
+
+        <property key="modalStripedRows" type="boolean" defaultValue="true">
+            <caption>Striped Rows</caption>
+            <category>Drill-Down Modal</category>
+            <description>Alternate row shading in the table.</description>
+        </property>
+
+        <property key="modalEnableColumnFilters" type="boolean" defaultValue="true">
+            <caption>Column Filters</caption>
+            <category>Drill-Down Modal</category>
+            <description>Show a filter input under each column header. Filters combine (AND) with each other and with the global search.</description>
+        </property>
+
+        <property key="modalShowSearch" type="boolean" defaultValue="true">
+            <caption>Show Global Search</caption>
+            <category>Drill-Down Modal</category>
+            <description>Show the search box that searches across all columns.</description>
+        </property>
+
+        <property key="modalShowExport" type="boolean" defaultValue="true">
+            <caption>Show Excel Export</caption>
+            <category>Drill-Down Modal</category>
+            <description>Show the Export Excel button. The export contains the currently filtered rows.</description>
+        </property>
+
+        <property key="modalBackdropOpacity" type="string" required="false">
+            <caption>Backdrop Opacity</caption>
+            <category>Drill-Down Modal</category>
+            <description>Optional. Darkness of the page behind the modal, from 0 (none) to 1 (black). Empty = 0.55 (light) / 0.7 (dark).</description>
+        </property>
+
+        <property key="modalClass" type="string" required="false">
+            <caption>Modal Class</caption>
+            <category>Drill-Down Modal</category>
+            <description>Extra CSS class added to the modal overlay, for theme-level overrides.</description>
+        </property>
+
         <!-- REPORTING -->
 
         <property key="enableReport" type="boolean" defaultValue="true">
